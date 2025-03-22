@@ -34,7 +34,6 @@ The Todo App Kubernetes setup consists of the following components:
 The project is structured as follows:  
 ```
 todo-app-kubernetes/
-├── k8s/
 │ ├── mysql-secret.yaml
 │ ├── mysql-statefulset.yaml
 │ ├── mysql-service.yaml
@@ -84,12 +83,6 @@ To connect to the MySQL database:
 ```  
 kubectl port-forward pod/mysql-0 3306:3306  
 mysql -h 127.0.0.1 -u root -p
-```
----
-## 🧹 Cleanup  
-To remove all deployed resources:  
-``` 
-kubectl delete -f k8s/
 ```
 ---
 ## 🚀 Future Enhancements  
