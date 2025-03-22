@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: todo-app
+spec:
+  serviceName: "todo-app"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-app
+  template:
+    metadata:
+      labels:
+        app: todo-app
+    spec:
+      containers:
+      - name: todo-app
+        image: hagersobhy728/getting-started:latest
+        env:
+        - name: MYSQL_HOST
+          value: "mysql"
+        - name: MYSQL_USER
+          value: "root"
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: root-password
+        - name: MYSQL_DB
+          value: "todos"
+        ports:
+        - containerPort: 3000
+  volumeClaimTemplates:
+  - metadata:
+      name: todo-app-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"
+      resources:
+        requests:
+          storage: 1Gi
